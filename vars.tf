@@ -1,0 +1,3 @@
+variable "certificates" {
+  type = any
+}
