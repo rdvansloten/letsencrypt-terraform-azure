@@ -30,7 +30,7 @@ resource "acme_certificate" "certificate" {
       AZURE_POLLING_INTERVAL    = 30
       AZURE_PROPAGATION_TIMEOUT = 600
       AZURE_TTL                 = 30
-      AZURE_RESOURCE_GROUP      = azurerm_resource_group.resource_group_dns.name
+      AZURE_RESOURCE_GROUP      = data.azurerm_resource_group.dns_records.name
       AZURE_SUBSCRIPTION_ID     = data.azurerm_client_config.current.subscription_id
       AZURE_TENANT_ID           = data.azurerm_client_config.current.tenant_id
     }
