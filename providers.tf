@@ -27,7 +27,6 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = "AZURE_SUBSCRIPTION_ID_HERE"
 
   features {
     key_vault {

@@ -1,15 +1,15 @@
 # Create a Resource Group
 resource "azurerm_resource_group" "resource_group_kv" {
-  name     = "keyvault-demo"
-  location = "West Europe"
+  name     = var.keyvault_rg
+  location = var.region
 }
 
 # Create a Key Vault
-resource "azurerm_key_vault" "key_vault" {
-  name                            = "VAULT_NAME_HERE"
+resource "azurerm_key_vault" "vault" {
+  name                            = var.key_Vault
   location                        = azurerm_resource_group.resource_group_kv.location
   resource_group_name             = azurerm_resource_group.resource_group_kv.name
-  sku_name                        = "standard"
+  sku_name                        = "Standard"
   tenant_id                       = data.azurerm_client_config.current.tenant_id
   soft_delete_enabled             = false
   enabled_for_disk_encryption     = true
@@ -44,28 +44,21 @@ resource "azurerm_key_vault" "key_vault" {
       "restore"
     ]
 
-    storage_permissions = [
-      "backup",
-      "create",
-      "delete",
-      "deleteissuers",
+    certificate_permissions = [
       "get",
-      "getissuers",
-      "import",
       "list",
-      "listissuers",
-      "managecontacts",
-      "manageissuers",
-      "purge",
+      "update",
+      "create",
+      "import",
+      "delete",
       "recover",
-      "restore",
-      "setissuers",
-      "update"
+      "backup",
+      "restore"
     ]
   }
 
   network_acls {
-    default_action = "Deny"
+    default_action = "Allow"
     bypass         = "AzureServices"
   }
 }

@@ -1,0 +1,10 @@
+# Terraform files
+*.tfstate
+*.tfstate.backup
+*.hcl
+.terraform
+
+# Certificates
+*.cer
+*.pfx
+*.crt

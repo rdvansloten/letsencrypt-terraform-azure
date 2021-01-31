@@ -1,10 +1,10 @@
 certificates = {
-  "*.domain.com" = {
+  "*.yourdomain.com" = {
     key_type                  = "RSA"
     key_size                  = 4096
-    subject_alternative_names = ["domain.com"]
+    subject_alternative_names = ["yourdomain.nl"]
   },
-  "subdomain.domain.com" = {
+  "subdomain.yourdomain.com" = {
     key_type                  = "RSA"
     key_size                  = 4096
     subject_alternative_names = null

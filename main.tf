@@ -27,9 +27,11 @@ resource "acme_certificate" "certificate" {
   dns_challenge {
     provider = "azure"
     config = {
-      AZURE_POLLING_INTERVAL    = 30
-      AZURE_PROPAGATION_TIMEOUT = 600
-      AZURE_TTL                 = 30
+      AZURE_POLLING_INTERVAL    = 1
+      AZURE_PROPAGATION_TIMEOUT = 5
+      AZURE_TTL                 = 1
+      AZURE_CLIENT_ID           = data.azurerm_client_config.current.client_id
+      AZURE_CLIENT_SECRET       = "" # Use a data resource or encrypted backend to store the secret
       AZURE_RESOURCE_GROUP      = data.azurerm_resource_group.dns_records.name
       AZURE_SUBSCRIPTION_ID     = data.azurerm_client_config.current.subscription_id
       AZURE_TENANT_ID           = data.azurerm_client_config.current.tenant_id
@@ -49,11 +51,11 @@ resource "local_file" "pfx_certificates" {
 resource "azurerm_key_vault_certificate" "certificate" {
   for_each     = var.certificates
   name         = replace(replace(each.key, "*", "wildcard"), ".", "-") # Transforms CN to valid string
-  key_vault_id = data.azurerm_key_vault.vault.id
+  key_vault_id = azurerm_key_vault.vault.id
 
   certificate {
     contents = acme_certificate.certificate[each.key].certificate_p12
-    password = "PASSWORD"
+    password = ""
   }
 
   certificate_policy {

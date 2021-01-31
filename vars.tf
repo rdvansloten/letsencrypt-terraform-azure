@@ -1,3 +1,0 @@
-variable "certificates" {
-  type = any
-}
